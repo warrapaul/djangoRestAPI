@@ -37,6 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'rest_framework',
+    'methodBased.apps.MethodbasedConfig',
+    'classBased.apps.ClassbasedConfig',
+    'genericBased.apps.GenericbasedConfig'
 ]
 
 MIDDLEWARE = [
@@ -50,7 +55,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'djangoRestAPI.urls'
-
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

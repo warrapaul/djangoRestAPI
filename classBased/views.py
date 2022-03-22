@@ -1,20 +1,20 @@
 from methodBased.models import Buildings
 from methodBased.serializers import BuildingsModalSerializer,BuildingSerializer
 from rest_framework import status
-from rest_framework.decorators import api_view
+from django.http import Http404
+from rest_framework.views import APIView
 from rest_framework.response import Response
   
    
    
  #List all code buildings, or create a new building.
-@api_view(['GET', 'POST'])
-def building_list(request):
-    if request.method == 'GET':
+class building_list(APIView):
+    def get (self, request):
         buildings = Buildings.objects.all()
         serializer = BuildingsModalSerializer(buildings, many=True)
         return Response(serializer.data)
 
-    elif request.method == 'POST':
+    def post(self, request):
         serializer = BuildingsModalSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -24,25 +24,27 @@ def building_list(request):
 
    
 #Retrieve, update or delete a code building.
-@api_view(['GET', 'PUT', 'DELETE'])
-def building_detail(request, pk):
- 
-    try:
-        building = Buildings.objects.get(pk=pk)
-    except Buildings.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+class building_detail(APIView):
+    def get_object(self, pk):
 
-    if request.method == 'GET':
+        try:
+            return Buildings.objects.get(pk=pk)
+        except Buildings.DoesNotExist:
+            raise Http404
+    def get(self, request, pk):
+        building = self.get_object(pk)
         serializer = BuildingsModalSerializer(building)
         return Response(serializer.data)
 
-    elif request.method == 'PUT':
+    def put(self, request, pk):
+        building = self.get_object(pk)
         serializer = BuildingsModalSerializer(building, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    elif request.method == 'DELETE':
+    def delete(self, request, pk):
+        building = self.get_object(pk)
         building.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
