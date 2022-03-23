@@ -11,5 +11,9 @@ class Buildings(models.Model):
     token = models.CharField(max_length=30)
     revenue = models.CharField(max_length=30)
 
+    #used for authentication -owner who will have pernmission to add/delete
+    owner =models.ForeignKey('auth.user',related_name='buildings', on_delete=models.CASCADE)
+
+
     def __str__(self):
         return self.buildingName +self.buildingCode

@@ -8,7 +8,7 @@ from rest_framework.response import Response
    
  #List all code buildings, or create a new building.
 @api_view(['GET', 'POST'])
-def building_list(request):
+def building_list(request, format=None):
     if request.method == 'GET':
         buildings = Buildings.objects.all()
         serializer = BuildingsModalSerializer(buildings, many=True)
@@ -25,7 +25,7 @@ def building_list(request):
    
 #Retrieve, update or delete a code building.
 @api_view(['GET', 'PUT', 'DELETE'])
-def building_detail(request, pk):
+def building_detail(request, pk, format=None):
  
     try:
         building = Buildings.objects.get(pk=pk)

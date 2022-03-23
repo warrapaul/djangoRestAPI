@@ -21,4 +21,9 @@ urlpatterns = [
     path('method/', include('methodBased.urls')),
     path('class/', include('classBased.urls')),
     path('generic/', include('genericBased.urls')),
+    path('authentication/', include('authentication.urls')),
+]
+
+urlpatterns += [
+    path('api-auth/', include('rest_framework.urls'))
 ]

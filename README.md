@@ -31,3 +31,10 @@ APIView when working with class based api
 
 5.GENERIC BASED
 provide a set of aready generated functionality classes that trim down views.py
+
+
+6. AUTHENTICATION
+- associates incoming requests with a set of identifying credentials i.e user or token
+-place at top of the view before any other code is excuted setting request.user to an instance of contrib.auth, request.auth represents authentication token and any other additional info
+
+-create user field in the model that will be used for authentication from auth.user
